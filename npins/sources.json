@@ -1,0 +1,61 @@
+{
+  "pins": {
+    "deploy-bs": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "xhalo32",
+        "repo": "deploy-bs"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "51d478a0b5d558a18c07d3f5600408a20902ef1d",
+      "timestamp": "2025-09-07T13:52:07Z",
+      "url": "https://github.com/xhalo32/deploy-bs/archive/51d478a0b5d558a18c07d3f5600408a20902ef1d.tar.gz",
+      "hash": "sha256-CO/Ss1R1gyBG2yGlhXzjdhExnAxKmBaTvz0336EkFmk="
+    },
+    "microvm.nix": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "microvm-nix",
+        "repo": "microvm.nix"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "2ba6697616834ff8c58ebc6180e4833c6d781b82",
+      "timestamp": "2025-09-03T15:30:21Z",
+      "url": "https://github.com/microvm-nix/microvm.nix/archive/2ba6697616834ff8c58ebc6180e4833c6d781b82.tar.gz",
+      "hash": "sha256-bApi+D4wQJe4tG03VySlb4lJOBWqpl8DK8niSfKT87U="
+    },
+    "nixpkgs": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nixos",
+        "repo": "nixpkgs"
+      },
+      "branch": "nixos-unstable",
+      "submodules": false,
+      "revision": "d0fc30899600b9b3466ddb260fd83deb486c32f1",
+      "timestamp": "2025-09-02T04:28:08Z",
+      "url": "https://github.com/nixos/nixpkgs/archive/d0fc30899600b9b3466ddb260fd83deb486c32f1.tar.gz",
+      "hash": "sha256-rw/PHa1cqiePdBxhF66V7R+WAP8WekQ0mCDG4CFqT8Y="
+    },
+    "sops-nix": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "Mic92",
+        "repo": "sops-nix"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "3223c7a92724b5d804e9988c6b447a0d09017d48",
+      "timestamp": "2025-08-12T08:55:08Z",
+      "url": "https://github.com/Mic92/sops-nix/archive/3223c7a92724b5d804e9988c6b447a0d09017d48.tar.gz",
+      "hash": "sha256-t+voe2961vCgrzPFtZxha0/kmFSHFobzF00sT8p9h0U="
+    }
+  },
+  "version": 6
+}
