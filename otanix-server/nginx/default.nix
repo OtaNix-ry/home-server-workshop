@@ -13,9 +13,13 @@
 
   sops.secrets."tls/key" = {
     sopsFile = ./nginx-secrets.yaml;
+    owner = "nginx"; # Note: permissions are configured here, not in environment.etc
+    group = "nginx";
   };
   sops.secrets."tls/cert" = {
     sopsFile = ./nginx-secrets.yaml;
+    owner = "nginx";
+    group = "nginx";
   };
 
   environment.etc."ssl/private/selfsigned.key".source = config.sops.secrets."tls/key".path;

@@ -16,8 +16,8 @@ See the [slides](TODO).
 
 ## Deployment
 
-1. build using `nix-build -A nixosConfigurations.otanix-server-wireguard.config.system.build.toplevel` (this creates the symlink ./result)
-1. copy the system using `nix copy --to ssh://root@192.168.122.248 ./result'
+1. build using `nix-build -A nixosConfigurations.otanix-server-wireguard.config.system.build.toplevel` (this creates the symlink `./result`)
+1. copy the system using `nix copy --to ssh://root@192.168.122.248 ./result`
 1. deploy with `ssh root@192.168.122.248 $(readlink result)/bin/switch-to-configuration switch`
 
 > Also, try [deploy-bs](https://github.com/xhalo32/deploy-bs) (available in `nix-shell`) which does the above steps automatically:
