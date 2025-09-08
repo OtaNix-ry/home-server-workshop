@@ -22,13 +22,11 @@
 
   services.nginx = {
     virtualHosts."vault.10.127.0.1.nip.io" = {
-      enableACME = false;
-      forceSSL = true;
+      enableACME = false; # Don't use Let's Encrypt
+      forceSSL = true; # Redirect plain HTTP traffic to HTTPS
       sslCertificate = "/etc/ssl/certs/selfsigned.pem";
       sslCertificateKey = "/etc/ssl/private/selfsigned.key";
-      locations."/" = {
-        proxyPass = "http://vaultwarden";
-      };
+      locations."/".proxyPass = "http://vaultwarden";
     };
     upstreams.vaultwarden.servers."127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}" =
       { };
