@@ -2,7 +2,7 @@
 
 
 #let loop = range(-3, 3).map(i => grid.cell(align: center + horizon, rotate(i * 20deg, image(
-  "nix.svg",
+  "images/nix.svg",
   height: 2em + (calc.pow(i, 2) * 0.1em),
 ))))
 
