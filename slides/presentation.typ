@@ -155,6 +155,10 @@
 - Libvirt (or another hypervisor of your choice)
 - You also need Git to clone this repository
 
+The materials in this workshop are open source and available on #link(repo)[GitHub].
+You can find the latest PDF from the GitHub releases.
+- `README.md` contains instructions for getting started.
+
 == Workshop Objectives
 
 The aim of this workshop is to be both an introduction and a guide to deploying a NixOS server in a _realistic environment_. We will
@@ -164,9 +168,6 @@ The aim of this workshop is to be both an introduction and a guide to deploying 
 - Set up a *WireGuard* VPN.
 - Deploy *nginx* with self-signed certificates on NixOS.
 - Deploy *Vaultwarden* with nginx as a reverse proxy.
-
-The materials in this workshop are open source and available on #link(repo)[GitHub].
-You can find the latest PDF from the GitHub releases.
 
 = Setting up a libvirt VM
 
@@ -762,7 +763,7 @@ nixos-rebuild switch \
   ```
 ]
 
-== Web-based service hosting on NixOS: Vaultwarden #footnote[#link(repo + "otanix-server/04-vaultwarden")[Source code for this part]]
+== Web-based service hosting on NixOS: Vaultwarden
 
 #text(20pt)[
   ```nix

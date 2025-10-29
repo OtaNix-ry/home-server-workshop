@@ -4,7 +4,7 @@ You can find the slides in the [GitHub releases](https://github.com/OtaNix-ry/ho
 
 ## OtaNix-Server
 
-Progression of the configurations (next inherits previous):
+Sections (next inherits previous):
 
 - [00: Setting up a libvirt VM](./otanix-server/00-initial/)
 - [01: Secret management](./otanix-server/01-secrets/)
@@ -12,14 +12,25 @@ Progression of the configurations (next inherits previous):
 - [03: Nginx](./otanix-server/03-nginx/): set up nginx + self-signed TLS for serving web-based services
 - [04: Vaultwarden](./otanix-server/04-vaultwarden/): runs vaultwarden (a password manager) behind the nginx that's configured to be a TLS-terminating reverse-proxy
 
-Start by cloning the repository with `git clone https://github.com/OtaNix-ry/home-server-workshop` and open the guide for section [00: Setting up a libvirt VM](./otanix-server/00-initial/).
+Start by cloning the repository with 
 
-The markdown material is complementary to the slides, so you should have both open.
+```
+git clone https://github.com/OtaNix-ry/home-server-workshop
+```
+
+and open the guide for section [00: Setting up a libvirt VM](./otanix-server/00-initial/).
+Follow the guide therein.
+
+> The markdown material is complementary to the slides, so you should have both open.
 
 ## Useful links
 
 - [Search for NixOS options](https://search.nixos.org/options?)
 - [sops-nix GitHub](https://github.com/Mic92/sops-nix)
+
+## Notes from the workshop on 2025-10-29
+
+- The configuration doesn't work with Nix Darwin, you need to set `system ? "x86_64-linux"` or `"aarch64-linux"` in [default.nix](./default.nix). Also, `nixos-rebuild` doesn't work so you must build it on the remote.
 
 ## Troubleshooting
 

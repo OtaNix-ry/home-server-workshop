@@ -20,8 +20,7 @@ let
     args:
     import (sources.nixpkgs + "/nixos/lib/eval-config.nix") (
       {
-        inherit lib;
-        system = "x86_64-linux";
+        inherit lib system;
 
         specialArgs = { inherit sources; };
         modules = args.modules ++ [
