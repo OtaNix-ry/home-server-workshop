@@ -66,18 +66,31 @@ in
   };
 
   presentation = typixLib.buildTypstProject {
-    unstable_typstPackages = [
-      {
-        name = "touying";
-        version = "0.6.1";
-        hash = "sha256-bTDc32MU4GPbUbW5p4cRSxsl9ODR6qXinvQGeHu2psU=";
-      }
-      {
-        name = "grayness";
-        version = "0.3.0";
-        hash = "sha256-c0HrerMTmXrf6Zk43JXVLTsRn8AhloLFsgVclkeg/PU=";
-      }
-    ];
+    TYPST_PACKAGE_CACHE_PATH = pkgs.symlinkJoin {
+      paths = (
+        with pkgs.typstPackages;
+        [
+          grayness
+          touying
+        ]
+      );
+      postBuild = ''
+        mv $out/lib/typst-packages $out/preview
+      '';
+      name = "typst-packages";
+    };
+    # unstable_typstPackages = [
+    #   {
+    #     name = "touying";
+    #     version = "0.6.1";
+    #     hash = "sha256-bTDc32MU4GPbUbW5p4cRSxsl9ODR6qXinvQGeHu2psU=";
+    #   }
+    #   {
+    #     name = "grayness";
+    #     version = "0.3.0";
+    #     hash = "sha256-c0HrerMTmXrf6Zk43JXVLTsRn8AhloLFsgVclkeg/PU=";
+    #   }
+    # ];
     src = ./slides;
     typstSource = "presentation.typ";
   };
