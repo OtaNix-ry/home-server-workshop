@@ -1,27 +1,20 @@
 # OtaNix workshop: Setting Up a Home Server Using NixOS
 
+You can find the slides in the [GitHub releases](https://github.com/OtaNix-ry/home-server-workshop/releases/tag/latest).
+
 ## OtaNix-Server
 
 Progression of the configurations (next inherits previous):
 
-- [Setting up a libvirt VM](./otanix-server/00-initial/)
-- [Secret management](./otanix-server/01-secrets/)
-<!-- - [`secrets`](./otanix-server/secrets/default.nix): adds sops-nix to manage secrets -->
-<!-- - [`02-wireguard`](./otanix-server/02-wireguard/default.nix): using sops-nix to provide the private key, this system sets up a WireGuard VPN -->
-<!-- - [`03-nginx`](./otanix-server/03-nginx/default.nix): sets up 03-nginx + self-signed TLS for serving web-based services -->
-<!-- - [`04-vaultwarden`](./otanix-server/04-vaultwarden/default.nix): runs 04-vaultwarden behind 03-nginx that's configured to be a TLS-terminating reverse-proxy -->
+- [00: Setting up a libvirt VM](./otanix-server/00-initial/)
+- [01: Secret management](./otanix-server/01-secrets/)
+- [02: Wireguard VPN](./otanix-server/02-wireguard)
+- [03: Nginx](./otanix-server/03-nginx/): set up nginx + self-signed TLS for serving web-based services
+- [04: Vaultwarden](./otanix-server/04-vaultwarden/): runs vaultwarden (a password manager) behind the nginx that's configured to be a TLS-terminating reverse-proxy
 
-## General deployment instructions
+Start by cloning the repository with `git clone https://github.com/OtaNix-ry/home-server-workshop` and open the guide for section [00: Setting up a libvirt VM](./otanix-server/00-initial/).
 
-1. Build the desired system using `nix-build -A nixosConfigurations.otanix-server-02-wireguard.config.system.build.toplevel` (this creates the symlink `./result`)
-1. Copy the system using `nix copy --to ssh://root@192.168.122.248 ./result`
-1. Deploy with `ssh root@192.168.122.248 $(readlink result)/bin/switch-to-configuration switch`
-
-<!-- > Also, try [deploy-bs](https://github.com/xhalo32/deploy-bs) (available in `nix-shell`) which does the above steps automatically:
->
-> ```sh
-> deploy nixosConfigurations.otanix-server-02-wireguard root@192.168.122.248
-> ``` -->
+The markdown material is complementary to the slides, so you should have both open.
 
 ## Useful links
 
