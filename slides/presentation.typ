@@ -39,7 +39,7 @@
 
 #let repo = "https://github.com/OtaNix-ry/home-server-workshop/blob/main/"
 
-// #let bg-img = read("images/background.png", encoding: none)
+#let bg-img = read("images/background.png", encoding: none)
 
 #show: simple-theme.with(
   aspect-ratio: "16-9",
@@ -59,7 +59,7 @@
     config,
     config-common(freeze-slide-counter: true),
     config-page(
-      // background: image-brighten(bg-img, amount: 0, width: 100%),
+      background: image-brighten(bg-img, amount: 0, width: 100%),
     ),
   )
   let info = self.info + args.named()
