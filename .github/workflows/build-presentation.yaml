@@ -53,4 +53,4 @@ jobs:
           prerelease: true
           files: outputs/*.pdf
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}x
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
