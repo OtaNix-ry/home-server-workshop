@@ -31,10 +31,20 @@ We can now build the [configuration](./default.nix) that is in this directory.
 Run the following command from the root of the repository.
 
 ```
-nixos-rebuild switch \
+NIX_SSHOPTS="-i id_rsa_otanix_server" nixos-rebuild switch \
   -A nixosConfigurations.otanix-server-02-wireguard \
   --target-host root@192.168.122.215
 ```
+
+### Managing the SSH identity
+
+Instead of using `NIX_SSHOPTS="-i id_rsa_otanix_server"` you can add the identity to your SSH agent with
+
+```
+ssh-add id_rsa_otanix_server
+```
+
+For the rest of the sections, we will assume you have the key in the agent.
 
 ## Checking the results
 
