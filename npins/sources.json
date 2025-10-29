@@ -55,6 +55,22 @@
       "timestamp": "2025-08-12T08:55:08Z",
       "url": "https://github.com/Mic92/sops-nix/archive/3223c7a92724b5d804e9988c6b447a0d09017d48.tar.gz",
       "hash": "sha256-t+voe2961vCgrzPFtZxha0/kmFSHFobzF00sT8p9h0U="
+    },
+    "typix": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "loqusion",
+        "repo": "typix"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "0.3.2",
+      "revision": "bddd0cbdc97f838602c664f6bd82c29d2522c8b8",
+      "url": "https://api.github.com/repos/loqusion/typix/tarball/refs/tags/0.3.2",
+      "hash": "sha256-P0n7lAITZiDy05bpEHzsrCMyd+kDXqAnjqXwYSaWWQk="
     }
   },
   "version": 6

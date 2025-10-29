@@ -1,4 +1,4 @@
-# Nix meetup presentation 2025-09-08
+# OtaNix workshop: Setting Up a Home Server Using NixOS
 
 ## OtaNix-Server
 
@@ -14,6 +14,10 @@ Progression of the configurations (next inherits previous):
 
 See the [slides](TODO).
 
+## Setting up a libvirt VM
+
+Download [`disko.nix`](./initial/disko.nix)
+
 ## Deployment
 
 1. build using `nix-build -A nixosConfigurations.otanix-server-wireguard.config.system.build.toplevel` (this creates the symlink `./result`)
@@ -25,3 +29,58 @@ See the [slides](TODO).
 > ```sh
 > deploy nixosConfigurations.otanix-server-wireguard root@192.168.122.248
 > ```
+
+## Useful links
+
+- [Search for NixOS options](https://search.nixos.org/options?)
+- [sops-nix GitHub](https://github.com/Mic92/sops-nix)
+
+## Troubleshooting
+
+### No bootable devices when starting VM
+
+If you want to boot into the live installer, make sure you have a source path configured (pointing to the installer ISO image) for the CDROM device:
+
+![](images/libvirt-cdrom.png)
+
+Also make sure to enable the CDROM as a boot option:
+
+![](images/libvirt-boot-options.png)
+
+After applying and force resetting, you should boot into the installer.
+
+### Unable to start VM
+
+If you get the following error when starting a VM (usually happens after a reboot)
+
+```
+Error starting domain: Requested operation is not valid: network 'default' is not active
+```
+
+you need to start the default network with
+
+```
+virsh -c qemu:///system net-start default
+```
+
+> To set the default network to start at boot, run
+> ```
+> virsh -c qemu:///system net-autostart default
+> ```
+
+### SSH key verification failed
+
+The installer generates a new [SSH host key](https://www.ssh.com/academy/ssh/host-key) at boot, so you will likely encounter the following error when trying to SSH in to it after a reboot:
+
+```
+$ ssh nixos@192.168.122.215
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+```
+
+This is easily fixed by removing the host from "known hosts":
+
+```
+ssh-keygen -R 192.168.122.215
+```

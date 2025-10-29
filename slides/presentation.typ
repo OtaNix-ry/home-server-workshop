@@ -1,5 +1,4 @@
 #import "@preview/touying:0.6.1": *
-#import "@preview/fletcher:0.5.8" as fletcher: diagram, edge, node
 #import "@preview/grayness:0.3.0": *
 
 #import themes.simple: *
@@ -122,6 +121,30 @@
 //   - VPN
 //   - vaultwarden + nginx + TLS
 // - Remote deployment
+
+== Practicalities
+
+#table(
+  stroke: 0pt,
+  columns: (1fr, 3fr),
+  table.header([*Time*], [*Topic*]),
+  [16:15 -- 16:45], [Presentation and walkthrough],
+  [17:00], [Pizza arrives #place(left + bottom, dx: -1.2em, emoji.pizza)],
+  [17:00 -- 19:00], [Doing the workshop independently],
+)
+
+\
+
+- There are 3 USB drives with minimal NixOS 25.05 image
+  - Return the drives after using them
+
+== Prerequisites to do the workshop yourself
+
+- Computer with GNU/Linux
+- Nix installed
+- Libvirt (or another hypervisor of your choice)
+- Preferably a large amount of RAM (>8GB)
+  - Consider closing unnecessary applications
 
 == Workshop Objectives
 

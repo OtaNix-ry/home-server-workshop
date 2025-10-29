@@ -1,0 +1,56 @@
+name: Build Typst
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+  
+permissions:
+  contents: write  # required for publishing releases
+
+jobs:
+  build:
+    name: Build Typst
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Nix
+        uses: cachix/install-nix-action@v30
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+
+      - name: Build presentation
+        run: |
+          nix-build -A presentation
+
+      - name: Rename result
+        run: |
+          mkdir outputs
+          cp -L result "outputs/$(basename $(readlink result)).pdf"
+
+      # - name: Upload PDFs as artifacts
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: outputs
+      #     path: outputs/
+
+      - name: Create or update rolling release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: "Latest presentation"
+          body: |
+            This release contains the most recent build the presentation.
+            
+            Commit: ${{ github.sha }}
+            Branch: ${{ github.ref_name }}
+          draft: false
+          prerelease: true
+          files: outputs/*.pdf
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}x

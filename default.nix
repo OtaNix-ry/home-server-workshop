@@ -30,6 +30,10 @@ let
       }
       // builtins.removeAttrs args [ "modules" ]
     );
+  typixLib = import (sources.typix + "/lib") {
+    inherit (pkgs) lib newScope;
+  };
+
 in
 {
   nixosConfigurations.otanix-server-initial = nixosSystem {
@@ -60,6 +64,23 @@ in
     modules = [
       ./otanix-server/vaultwarden
     ];
+  };
+
+  presentation = typixLib.buildTypstProject {
+    unstable_typstPackages = [
+      {
+        name = "touying";
+        version = "0.6.1";
+        hash = "sha256-bTDc32MU4GPbUbW5p4cRSxsl9ODR6qXinvQGeHu2psU=";
+      }
+      {
+        name = "grayness";
+        version = "0.3.0";
+        hash = "sha256-c0HrerMTmXrf6Zk43JXVLTsRn8AhloLFsgVclkeg/PU=";
+      }
+    ];
+    src = ./slides;
+    typstSource = "presentation.typ";
   };
 
   shell = pkgs.mkShell {
