@@ -1,11 +1,13 @@
 # Setting up a libvirt VM
 
 Here are written instructions for installing NixOS on the VM.
-See the [slides](https://github.com/OtaNix-ry/otanix-server-2025-09-08/releases) for creating the VM with libvirt.
+See the [slides](https://github.com/OtaNix-ry/home-server-workshop/releases) for creating the VM with libvirt.
 
 You should have a working SSH connection to the VM.
 
 > If you have trouble starting the VM or connecting to it with SSH, see the [general troubleshooting in README](../../README.md#troubleshooting)
+
+You should have this repository cloned on your host system at this stage.
 
 Run all shell commands on the VM (through SSH), not on your host operating system.
 
@@ -26,7 +28,7 @@ sudo nix --experimental-features "nix-command flakes" run github:nix-community/d
     sudo nixos-generate-config --root /mnt
     ```
 
-2. Check that `/mnt/etc/nixos/hardware-configuration.nix` contains a file system:
+2. Copy `/mnt/etc/nixos/hardware-configuration.nix` from the VM to this directory as it contains a random filesystem UUID
 
     ```
     cat /mnt/etc/nixos/hardware-configuration.nix
@@ -60,3 +62,5 @@ chmod 600 id_rsa_otanix_server
 ssh-keygen -R 192.168.122.215
 ssh root@192.168.122.215 -i id_rsa_otanix_server
 ```
+
+> Replace the IP address 192.168.122.215 with your server's address. You should replace it in all the upcoming commands as well.

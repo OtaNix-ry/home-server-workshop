@@ -153,7 +153,7 @@
   - Preferably a large amount of RAM (>8GB) #footnote[Consider closing unnecessary applications if you have only 16GB of RAM]
 - Nix installed
 - Libvirt (or another hypervisor of your choice)
-- It's also recommended to clone this repository for yourself. For that you need to have Git installed
+- You also need Git to clone this repository
 
 == Workshop Objectives
 
@@ -512,11 +512,11 @@ Last login: Sun Sep  7 12:04:36 2025
   - Included in the Linux kernel used in NixOS
   - NetworkManager support
   - Suitable for declarative node-to-node tunnels
-  - `wg` is provided by `02-wireguard-tools` from nixpkgs
+  - `wg` is provided by `wireguard-tools` from nixpkgs
 ][
   #text(20pt)[
     ```sh
-    [root@otanix-server:~]# nix-shell -p 02-wireguard-tools
+    [root@otanix-server:~]# nix-shell -p wireguard-tools
 
     [nix-shell:~]# wg genkey |tee privkey
     ANo3R41zG7ixKvIR1iaD98vsKA3x...
@@ -561,7 +561,7 @@ Let's add the following options to `configuration.nix`:
 
 #text(20pt)[
   ```nix
-  { networking.02-wireguard.interfaces.wg0 = {
+  { networking.wireguard.interfaces.wg0 = {
       ips = [ "10.127.0.1/24" ];
       listenPort = 51820;
       privateKeyFile = config.sops.secrets."wg0/privateKey".path;
@@ -571,7 +571,7 @@ Let's add the following options to `configuration.nix`:
       ];
     };
     networking.firewall.allowedUDPPorts =
-      [ config.networking.02-wireguard.interfaces.wg0.listenPort ];
+      [ config.networking.wireguard.interfaces.wg0.listenPort ];
   }
   ```
 ]
@@ -582,26 +582,11 @@ Let's add the following options to `configuration.nix`:
 
 == Build and deploy (remotely from the host)
 
-// I have set up a #link("")[repository] with the configuration.
-
-+ Let's build the configuration manually
-
-  ```sh
-  nix-build -A nixosConfigurations.otanix-server-02-wireguard.config.system.build.toplevel
-  ```
-+ Then, copy it to the VM
-
-  ```sh
-  nix copy --to ssh://root@192.168.122.248 ./result
-  ```
-
-+ Finally, deploy it, i.e. switch to the new configuration on the VM
-
-  ```sh
-  ssh root@192.168.122.248 $(readlink result)/bin/switch-to-configuration switch
-  ```
-
-== Build and deploy (remotely from the host)
+```sh
+nixos-rebuild switch \
+  -A nixosConfigurations.otanix-server-02-wireguard \
+  --target-host root@192.168.122.215
+```
 
 #text(20pt)[
   ```
@@ -611,7 +596,7 @@ Let's add the following options to `configuration.nix`:
   sops-install-secrets: Imported /etc/ssh/ssh_host_ed25519_key as age key with fingerprint
     age1fwmktgds7wwrd2qtxwjwg0gvqv9snpzq0jk4chv4gtra5ut7lcvsqkyprm
   ...
-  the following new units were started: run-secrets.d.mount, 02-wireguard-wg0.service, 02-wireguard-wg0.target, ...
+  the following new units were started: run-secrets.d.mount, wireguard-wg0.service, wireguard-wg0.target, ...
   ```
 ]
 
@@ -646,7 +631,7 @@ Let's add the following options to `configuration.nix`:
 
   #text(20pt)[
     ```sh
-    nmcli connection import type 02-wireguard file otanix-vpn.conf
+    nmcli connection import type wireguard file otanix-vpn.conf
     ```
   ]
 ][

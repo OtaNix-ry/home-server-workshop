@@ -11,17 +11,17 @@ Progression of the configurations (next inherits previous):
 <!-- - [`03-nginx`](./otanix-server/03-nginx/default.nix): sets up 03-nginx + self-signed TLS for serving web-based services -->
 <!-- - [`04-vaultwarden`](./otanix-server/04-vaultwarden/default.nix): runs 04-vaultwarden behind 03-nginx that's configured to be a TLS-terminating reverse-proxy -->
 
-## Deployment
+## General deployment instructions
 
-1. build using `nix-build -A nixosConfigurations.otanix-server-02-wireguard.config.system.build.toplevel` (this creates the symlink `./result`)
-1. copy the system using `nix copy --to ssh://root@192.168.122.248 ./result`
-1. deploy with `ssh root@192.168.122.248 $(readlink result)/bin/switch-to-configuration switch`
+1. Build the desired system using `nix-build -A nixosConfigurations.otanix-server-02-wireguard.config.system.build.toplevel` (this creates the symlink `./result`)
+1. Copy the system using `nix copy --to ssh://root@192.168.122.248 ./result`
+1. Deploy with `ssh root@192.168.122.248 $(readlink result)/bin/switch-to-configuration switch`
 
-> Also, try [deploy-bs](https://github.com/xhalo32/deploy-bs) (available in `nix-shell`) which does the above steps automatically:
+<!-- > Also, try [deploy-bs](https://github.com/xhalo32/deploy-bs) (available in `nix-shell`) which does the above steps automatically:
 >
 > ```sh
 > deploy nixosConfigurations.otanix-server-02-wireguard root@192.168.122.248
-> ```
+> ``` -->
 
 ## Useful links
 
