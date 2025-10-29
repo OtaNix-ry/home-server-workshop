@@ -36,33 +36,33 @@ let
 
 in
 {
-  nixosConfigurations.otanix-server-initial = nixosSystem {
+  nixosConfigurations.otanix-server-00-initial = nixosSystem {
     modules = [
-      ./otanix-server/initial
+      ./otanix-server/00-initial
     ];
   };
 
-  nixosConfigurations.otanix-server-secrets = nixosSystem {
+  nixosConfigurations.otanix-server-01-secrets = nixosSystem {
     modules = [
-      ./otanix-server/secrets
+      ./otanix-server/01-secrets
     ];
   };
 
-  nixosConfigurations.otanix-server-wireguard = nixosSystem {
+  nixosConfigurations.otanix-server-02-wireguard = nixosSystem {
     modules = [
-      ./otanix-server/wireguard
+      ./otanix-server/02-wireguard
     ];
   };
 
-  nixosConfigurations.otanix-server-nginx = nixosSystem {
+  nixosConfigurations.otanix-server-03-nginx = nixosSystem {
     modules = [
-      ./otanix-server/nginx
+      ./otanix-server/03-nginx
     ];
   };
 
-  nixosConfigurations.otanix-server-vaultwarden = nixosSystem {
+  nixosConfigurations.otanix-server-04-vaultwarden = nixosSystem {
     modules = [
-      ./otanix-server/vaultwarden
+      ./otanix-server/04-vaultwarden
     ];
   };
 

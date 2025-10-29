@@ -8,7 +8,7 @@
 {
   imports = [
     # Inherit from previous configuration
-    ../secrets
+    ../01-secrets
   ];
 
   networking.wireguard.interfaces.wg0 = {

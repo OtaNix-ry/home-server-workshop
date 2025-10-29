@@ -8,8 +8,8 @@
 
 {
   imports = [
-    # Inherit from initial configuration
-    ../initial
+    # Inherit from 00-initial configuration
+    ../00-initial
     # Load the sops-nix module
     (sources.sops-nix + "/modules/sops")
   ];

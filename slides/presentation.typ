@@ -255,7 +255,7 @@ And yes -- I use #link("https://github.com/ryanoasis/nerd-fonts/tree/master/patc
   #link("https://github.com/nix-community/disko")[Image source]
 
   #link(
-    "https://github.com/OtaNix-ry/otanix-server-2025-09-08/blob/main/otanix-server/initial/disko.nix",
+    "https://github.com/OtaNix-ry/otanix-server-2025-09-08/blob/main/otanix-server/otanix-server/00-initial/disko.nix",
   )[URL to GitHub disko.nix]
 ]
 
@@ -311,7 +311,6 @@ And yes -- I use #link("https://github.com/ryanoasis/nerd-fonts/tree/master/patc
   ```
   ```
   /dev/vda2 on /mnt type ext4 (rw,relatime)
-  /dev/vda1 on /mnt/boot type vfat (rw,relatime,fmask=0077,dmask=0077,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro)
   ```
 ]
 
@@ -340,7 +339,7 @@ And yes -- I use #link("https://github.com/ryanoasis/nerd-fonts/tree/master/patc
 
     #pause
 
-    === 2. check `hardware-configuration.nix`
+    === 2. Check `hardware-configuration.nix`
 
     ```nix
       fileSystems."/" =
@@ -353,7 +352,7 @@ And yes -- I use #link("https://github.com/ryanoasis/nerd-fonts/tree/master/patc
     #pause
 
     #place(dy: -2em)[
-      === 3. edit `configuration.nix`
+      === 3. Edit `configuration.nix`
 
       ```nix
         # Use the GRUB 2 boot loader.
@@ -380,7 +379,7 @@ And yes -- I use #link("https://github.com/ryanoasis/nerd-fonts/tree/master/patc
 #grid(columns: (1fr,) * 2, gutter: 1em)[
   Finally, let's install NixOS on the disk! #emoji.rocket
 
-  `nixos-install` downloads and copies packages and is the most resource intensive part in the process. At least 2GB of ram is recommended#footnote[Sometimes you need to #link("https://nixos.wiki/wiki/NixOS_Installation_Guide#Create_swap_file")[create a temporary SWAP file] to even build the system configuration].
+  `nixos-install` downloads and copies packages and is the most resource intensive part in the process. At least 2GB of ram is recommended#footnote[If you have problems with memory usage, try #link("https://nixos.wiki/wiki/NixOS_Installation_Guide#Create_swap_file")[creating a temporary SWAP file] to build the system configuration].
 ][
   #text(18pt)[
     ```sh
@@ -494,7 +493,7 @@ Last login: Sun Sep  7 12:04:36 2025
 = WireGuard VPN
 
 #place(bottom + right, link(
-  "https://github.com/OtaNix-ry/otanix-server-2025-09-08/tree/main/otanix-server/wireguard",
+  "https://github.com/OtaNix-ry/otanix-server-2025-09-08/tree/main/otanix-server/02-wireguard",
 )[Source code for this part])
 
 ==
@@ -504,11 +503,11 @@ Last login: Sun Sep  7 12:04:36 2025
   - Included in the Linux kernel used in NixOS
   - NetworkManager support
   - Suitable for declarative node-to-node tunnels
-  - `wg` is provided by `wireguard-tools` from nixpkgs
+  - `wg` is provided by `02-wireguard-tools` from nixpkgs
 ][
   #text(20pt)[
     ```sh
-    [root@otanix-server:~]# nix-shell -p wireguard-tools
+    [root@otanix-server:~]# nix-shell -p 02-wireguard-tools
 
     [nix-shell:~]# wg genkey |tee privkey
     ANo3R41zG7ixKvIR1iaD98vsKA3x...
@@ -553,7 +552,7 @@ Let's add the following options to `configuration.nix`:
 
 #text(20pt)[
   ```nix
-  { networking.wireguard.interfaces.wg0 = {
+  { networking.02-wireguard.interfaces.wg0 = {
       ips = [ "10.127.0.1/24" ];
       listenPort = 51820;
       privateKeyFile = config.sops.secrets."wg0/privateKey".path;
@@ -563,7 +562,7 @@ Let's add the following options to `configuration.nix`:
       ];
     };
     networking.firewall.allowedUDPPorts =
-      [ config.networking.wireguard.interfaces.wg0.listenPort ];
+      [ config.networking.02-wireguard.interfaces.wg0.listenPort ];
   }
   ```
 ]
@@ -579,7 +578,7 @@ Let's add the following options to `configuration.nix`:
 + Let's build the configuration manually
 
   ```sh
-  nix-build -A nixosConfigurations.otanix-server-wireguard.config.system.build.toplevel
+  nix-build -A nixosConfigurations.otanix-server-02-wireguard.config.system.build.toplevel
   ```
 + Then, copy it to the VM
 
@@ -603,7 +602,7 @@ Let's add the following options to `configuration.nix`:
   sops-install-secrets: Imported /etc/ssh/ssh_host_ed25519_key as age key with fingerprint
     age1fwmktgds7wwrd2qtxwjwg0gvqv9snpzq0jk4chv4gtra5ut7lcvsqkyprm
   ...
-  the following new units were started: run-secrets.d.mount, wireguard-wg0.service, wireguard-wg0.target, ...
+  the following new units were started: run-secrets.d.mount, 02-wireguard-wg0.service, 02-wireguard-wg0.target, ...
   ```
 ]
 
@@ -638,7 +637,7 @@ Let's add the following options to `configuration.nix`:
 
   #text(20pt)[
     ```sh
-    nmcli connection import type wireguard file otanix-vpn.conf
+    nmcli connection import type 02-wireguard file otanix-vpn.conf
     ```
   ]
 ][

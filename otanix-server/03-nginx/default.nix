@@ -8,7 +8,7 @@
 {
   imports = [
     # Inherit from previous configuration
-    ../wireguard
+    ../02-wireguard
   ];
 
   sops.secrets."tls/key" = {

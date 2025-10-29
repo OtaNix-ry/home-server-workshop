@@ -8,7 +8,7 @@
 {
   imports = [
     # Inherit from previous configuration
-    ../nginx
+    ../03-nginx
   ];
 
   services.vaultwarden = {

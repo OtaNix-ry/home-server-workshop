@@ -4,30 +4,22 @@
 
 Progression of the configurations (next inherits previous):
 
-- [`initial`](./otanix-server/initial/default.nix): the resulting system after provisioning the disks with [disko.nix](./otanix-server/initial/disko.nix)
-- [`secrets`](./otanix-server/secrets/default.nix): adds sops-nix to manage secrets
-- [`wireguard`](./otanix-server/wireguard/default.nix): using sops-nix to provide the private key, this system sets up a WireGuard VPN
-- [`nginx`](./otanix-server/nginx/default.nix): sets up nginx + self-signed TLS for serving web-based services
-- [`vaultwarden`](./otanix-server/vaultwarden/default.nix): runs vaultwarden behind nginx that's configured to be a TLS-terminating reverse-proxy
-
-## Creating the VM
-
-See the [slides](https://github.com/OtaNix-ry/otanix-server-2025-09-08/releases).
-
-## Setting up a libvirt VM
-
-Download [`disko.nix`](./initial/disko.nix)
+- [Setting up a libvirt VM](./otanix-server/00-initial/)
+<!-- - [`secrets`](./otanix-server/secrets/default.nix): adds sops-nix to manage secrets -->
+<!-- - [`02-wireguard`](./otanix-server/02-wireguard/default.nix): using sops-nix to provide the private key, this system sets up a WireGuard VPN -->
+<!-- - [`03-nginx`](./otanix-server/03-nginx/default.nix): sets up 03-nginx + self-signed TLS for serving web-based services -->
+<!-- - [`04-vaultwarden`](./otanix-server/04-vaultwarden/default.nix): runs 04-vaultwarden behind 03-nginx that's configured to be a TLS-terminating reverse-proxy -->
 
 ## Deployment
 
-1. build using `nix-build -A nixosConfigurations.otanix-server-wireguard.config.system.build.toplevel` (this creates the symlink `./result`)
+1. build using `nix-build -A nixosConfigurations.otanix-server-02-wireguard.config.system.build.toplevel` (this creates the symlink `./result`)
 1. copy the system using `nix copy --to ssh://root@192.168.122.248 ./result`
 1. deploy with `ssh root@192.168.122.248 $(readlink result)/bin/switch-to-configuration switch`
 
 > Also, try [deploy-bs](https://github.com/xhalo32/deploy-bs) (available in `nix-shell`) which does the above steps automatically:
 >
 > ```sh
-> deploy nixosConfigurations.otanix-server-wireguard root@192.168.122.248
+> deploy nixosConfigurations.otanix-server-02-wireguard root@192.168.122.248
 > ```
 
 ## Useful links
