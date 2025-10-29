@@ -12,7 +12,7 @@ Progression of the configurations (next inherits previous):
 
 ## Creating the VM
 
-See the [slides](TODO).
+See the [slides](https://github.com/OtaNix-ry/otanix-server-2025-09-08/releases).
 
 ## Setting up a libvirt VM
 

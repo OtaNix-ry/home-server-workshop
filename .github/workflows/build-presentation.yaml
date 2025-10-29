@@ -29,15 +29,12 @@ jobs:
           nix-build -A presentation
 
       - name: Rename result
+        id: rename
         run: |
           mkdir outputs
-          cp -L result "outputs/$(basename $(readlink result)).pdf"
-
-      # - name: Upload PDFs as artifacts
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: outputs
-      #     path: outputs/
+          export FILENAME="$(basename $(readlink result)).pdf"
+          cp -L result "outputs/$FILENAME"
+          echo "filename=$FILENAME" >> $GITHUB_OUTPUT
 
       - name: Create or update rolling release
         uses: softprops/action-gh-release@v2
@@ -46,11 +43,12 @@ jobs:
           name: "Latest presentation"
           body: |
             This release contains the most recent build the presentation.
+            [Direct download](https://github.com/${{ github.repository }}/releases/download/latest/${{ steps.rename.outputs.filename }})
             
             Commit: ${{ github.sha }}
             Branch: ${{ github.ref_name }}
           draft: false
-          prerelease: true
+          prerelease: false
           files: outputs/*.pdf
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

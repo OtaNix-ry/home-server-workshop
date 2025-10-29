@@ -157,6 +157,7 @@ The aim of this workshop is to be both an introduction and a guide to deploying 
 - Deploy *Vaultwarden* with nginx as a reverse proxy.
 
 The materials in this workshop are open source and available on #link("https://github.com/otanix-ry/otanix-server-2025-09-08")[GitHub].
+You can find the latest PDF from the GitHub releases.
 
 = Setting up a libvirt VM
 
