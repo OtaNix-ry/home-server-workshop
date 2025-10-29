@@ -3,22 +3,28 @@
 
 #import themes.simple: *
 
-#let image-slide(config: (:), background: auto, background-img: none, foreground: white, body) = touying-slide-wrapper(
-  self => {
-    self = utils.merge-dicts(
-      self,
-      config-common(freeze-slide-counter: true),
-      config-page(fill: if background == auto {
+#let image-slide(
+  config: (:),
+  background: auto,
+  background-img: none,
+  foreground: white,
+  body,
+) = touying-slide-wrapper(self => {
+  self = utils.merge-dicts(
+    self,
+    config-common(freeze-slide-counter: true),
+    config-page(
+      fill: if background == auto {
         self.colors.primary
       } else {
         background
-      }),
-      config-page(background: background-img),
-    )
-    set text(fill: foreground, size: 1.5em)
-    touying-slide(self: self, config: config, align(center + horizon, body))
-  },
-)
+      },
+    ),
+    config-page(background: background-img),
+  )
+  set text(fill: foreground, size: 1.5em)
+  touying-slide(self: self, config: config, align(center + horizon, body))
+})
 
 #let palette = (
   rgb("#7287fd"), // lavender
@@ -38,6 +44,7 @@
 #show: simple-theme.with(
   aspect-ratio: "16-9",
   config-page(
+    background: place(top + right, box(inset: 0.5em, image("images/otanix-logo.svg", height: 8%))),
     // background: image-brighten(bg-img, amount: 0, width: 100%),
   ),
 )
@@ -259,29 +266,30 @@ And yes -- I use #link("https://github.com/ryanoasis/nerd-fonts/tree/master/patc
   #image("images/disko.png", height: 60%)
   #link("https://github.com/nix-community/disko")[Image source]
 
-  #link(
-    repo + "otanix-server/otanix-server/00-initial/disko.nix",
-  )[URL to GitHub disko.nix]
+  #link(repo + "otanix-server/otanix-server/00-initial/disko.nix")[URL to GitHub disko.nix]
 ]
 
-#place(right + horizon, text(21pt)[
-  ```nix
-  partitions = {
-    boot = { # Legacy boot partition
-      size = "1M";
-      type = "EF02"; # for grub MBR
-    };
-    root = { # Data partition
-      size = "100%";
-      content = {
-        type = "filesystem";
-        format = "ext4";
-        mountpoint = "/";
+#place(
+  right + horizon,
+  text(21pt)[
+    ```nix
+    partitions = {
+      boot = { # Legacy boot partition
+        size = "1M";
+        type = "EF02"; # for grub MBR
+      };
+      root = { # Data partition
+        size = "100%";
+        content = {
+          type = "filesystem";
+          format = "ext4";
+          mountpoint = "/";
+        };
       };
     };
-  };
-  ```
-])
+    ```
+  ],
+)
 
 #pause
 
@@ -433,9 +441,7 @@ Last login: Sun Sep  7 12:04:36 2025
 
 = Secret management
 
-#place(bottom + right, link(
-  repo + "otanix-server/01-secrets",
-)[Source code for this part])
+#place(bottom + right, link(repo + "otanix-server/01-secrets")[Source code for this part])
 
 == What about secret management?
 
@@ -497,9 +503,7 @@ Last login: Sun Sep  7 12:04:36 2025
 
 = WireGuard VPN
 
-#place(bottom + right, link(
-  repo + "otanix-server/02-wireguard",
-)[Source code for this part])
+#place(bottom + right, link(repo + "otanix-server/02-wireguard")[Source code for this part])
 
 ==
 
@@ -697,9 +701,7 @@ Let's add the following options to `configuration.nix`:
 
 = Web-based service hosting on NixOS: Nginx
 
-#place(bottom + right, link(
-  repo + "otanix-server/03-nginx",
-)[Source code for this part])
+#place(bottom + right, link(repo + "otanix-server/03-nginx")[Source code for this part])
 
 ==
 
@@ -756,9 +758,7 @@ Let's add the following options to `configuration.nix`:
 
 = Web-based service hosting on NixOS: Vaultwarden
 
-#place(bottom + right, link(
-  repo + "otanix-server/04-vaultwarden",
-)[Source code for this part])
+#place(bottom + right, link(repo + "otanix-server/04-vaultwarden")[Source code for this part])
 
 ==
 

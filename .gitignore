@@ -1,3 +1,4 @@
 result*
 slides/*.pdf
 slides/*.png
+.direnv
