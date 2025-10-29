@@ -32,11 +32,14 @@
 
 #show link: set text(blue, style: "italic")
 
-#let bg-img = read("images/background.png", encoding: none)
+// #let bg-img = read("images/background.png", encoding: none)
 
-#show: simple-theme.with(aspect-ratio: "16-9", config-page(
-  background: image-brighten(bg-img, amount: 0, width: 100%),
-))
+#show: simple-theme.with(
+  aspect-ratio: "16-9",
+  config-page(
+    // background: image-brighten(bg-img, amount: 0, width: 100%),
+  ),
+)
 // Copied from metropolis theme
 #let custom-title-slide(
   config: (:),
@@ -48,7 +51,7 @@
     config,
     config-common(freeze-slide-counter: true),
     config-page(
-      background: image-brighten(bg-img, amount: 0, width: 100%),
+      // background: image-brighten(bg-img, amount: 0, width: 100%),
     ),
   )
   let info = self.info + args.named()
@@ -92,7 +95,7 @@
 
 #let info = (
   title: [Setting Up a Home Server Using NixOS],
-  subtitle: [Nix Meetup Helsinki, 2025-09-08],
+  subtitle: [OtaNix workshop, 2025-10-29],
   author: [Niklas Halonen & Luukas Pörtfors],
   date: datetime(year: 2025, month: 9, day: 8),
   institution: [OtaNix ry],
@@ -120,9 +123,9 @@
 //   - vaultwarden + nginx + TLS
 // - Remote deployment
 
-== Talk Objectives
+== Workshop Objectives
 
-The aim of this talk is to be both an introduction and a guide to deploying a NixOS server in a _realistic environment_:
+The aim of this workshop is to be both an introduction and a guide to deploying a NixOS server in a _realistic environment_. We will
 
 - Provision a new NixOS virtual machine with *libvirt*.
 - Set up secret management with *sops-nix*.
@@ -130,31 +133,63 @@ The aim of this talk is to be both an introduction and a guide to deploying a Ni
 - Deploy *nginx* with self-signed certificates on NixOS.
 - Deploy *Vaultwarden* with nginx as a reverse proxy.
 
-This presentation is open and available on #link("https://github.com/otanix-ry/otanix-server-2025-09-08")[GitHub] along with instructions on how to reproduce the same results.
+The materials in this workshop are open source and available on #link("https://github.com/otanix-ry/otanix-server-2025-09-08")[GitHub].
 
 = Setting up a libvirt VM
 
 ==
 
-#place(bottom + left, image("images/virt-manager.png"))
+#place(center, image("images/nixos-download.png", height: 90%))
+
+
+#block(
+  fill: white,
+  inset: (bottom: 1em),
+)[
+  #set text(30pt)
+  Go to #link("https://nixos.org/download") and download the *minimal ISO image* (1.6GB) for your CPU architecture.]
 
 #pause
 
-#place(top + right, image("images/nixos-download.png", height: 90%))
+#place(top + center, dx: 4%, dy: 86%, box(height: 15%, width: 25%, stroke: 2pt + red))
+
+==
+
+Install and open `Virtual Machine Manager` (libvirt).
+Add a connection to `QEMU/KVM` (system session #footnote[Using the user session is not recommended as it makes networking and getting an SSH connection more difficult.], requires membership of `libvirtd` group) under `File > Add connection`.
+
+#place(bottom, dy: 1em, image("images/virt-manager.png"))
+
+#pause
+
+#place(horizon + right, dx: 1%, dy: 21%, image("images/qemu-kvm.png", width: 40%))
+#pause
+
+#place(top + left, dx: 0.5%, dy: 48%, box(height: 7%, width: 5%, stroke: 2pt + red))
+
+#place(top + left, dx: 2%, dy: 78%, box(height: 10%, width: 25%, stroke: 2pt + orange))
 
 ==
 
 #place(bottom + left, dx: -1em, image("images/new-vm.png"))
+
 #place(bottom + right, dx: 1em, image("images/os.png"))
+
+#pause
+
+#place(bottom + right, dx: 1em, image("images/locate-iso.png"))
+
+#place(bottom + right, dx: -18%, dy: -1%, box(height: 10%, width: 13%, stroke: 2pt + red))
 
 ==
 
 #block(width: 50%)[
-  - Add RAM, CPU and a 20GB disk image
-  - Let's use the default NAT network
+  - Add RAM, CPU and a 20GB of disk storage.
+  - Let's use the default NAT network #footnote[Not available in the user session on my machine.]
+    - The network might be in an "inactive" state. It should ask whether to start it when you press *Finish*
 ]
 
-#place(bottom + right, image("images/install.png"))
+#place(top + right, image("images/install.png"))
 
 ==
 
@@ -165,7 +200,6 @@ This presentation is open and available on #link("https://github.com/otanix-ry/o
 
 #place(right, image("images/tty.png"))
 
-// TODO mention virt-viewer (patched)
 \
 
 #place(bottom + center, text(80pt, emoji.party))
@@ -182,6 +216,8 @@ This presentation is open and available on #link("https://github.com/otanix-ry/o
 
 ==
 
+Note: press `LCTRL + ALT` to detach your keyboard from the guest VM.
+
 #image("images/ssh.png")
 
 #pause
@@ -190,23 +226,21 @@ And yes -- I use #link("https://github.com/ryanoasis/nerd-fonts/tree/master/patc
 
 == Disk partitioning with Disko
 
-#place(left + bottom, {
-  image("images/disko.png", height: 80%)
-  link("https://github.com/nix-community/disko")[Image source]
-})
+#place(left + horizon)[
+  #image("images/disko.png", height: 60%)
+  #link("https://github.com/nix-community/disko")[Image source]
 
-#place(right + horizon, text(17pt)[
+  #link(
+    "https://github.com/OtaNix-ry/otanix-server-2025-09-08/blob/main/otanix-server/initial/disko.nix",
+  )[URL to GitHub disko.nix]
+]
+
+#place(right + horizon, text(21pt)[
   ```nix
   partitions = {
-    ESP = { # EFI system partition
-      type = "EF00";
-      size = "500M";
-      content = {
-        type = "filesystem";
-        format = "vfat";
-        mountpoint = "/boot";
-        mountOptions = [ "umask=0077" ];
-      };
+    boot = { # Legacy boot partition
+      size = "1M";
+      type = "EF02"; # for grub MBR
     };
     root = { # Data partition
       size = "100%";
@@ -222,11 +256,11 @@ And yes -- I use #link("https://github.com/ryanoasis/nerd-fonts/tree/master/patc
 
 #pause
 
-#place(dx: 60%, dy: -1%, box(height: 51%, width: 40%, stroke: 2pt + red))
+#place(dx: 53%, dy: -1%, box(height: 34%, width: 50%, stroke: 2pt + red))
 
 #pause
 
-#place(dx: 60%, dy: 51%, box(height: 41%, width: 40%, stroke: 2pt + orange))
+#place(dx: 53%, dy: 33.4%, box(height: 50%, width: 50%, stroke: 2pt + orange))
 
 == Disk partitioning with Disko
 
