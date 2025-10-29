@@ -5,6 +5,7 @@
 Progression of the configurations (next inherits previous):
 
 - [Setting up a libvirt VM](./otanix-server/00-initial/)
+- [Secret management](./otanix-server/01-secrets/)
 <!-- - [`secrets`](./otanix-server/secrets/default.nix): adds sops-nix to manage secrets -->
 <!-- - [`02-wireguard`](./otanix-server/02-wireguard/default.nix): using sops-nix to provide the private key, this system sets up a WireGuard VPN -->
 <!-- - [`03-nginx`](./otanix-server/03-nginx/default.nix): sets up 03-nginx + self-signed TLS for serving web-based services -->

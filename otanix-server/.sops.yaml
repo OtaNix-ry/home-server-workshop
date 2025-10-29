@@ -3,10 +3,10 @@ keys:
     # To convert the host SSH key to age, run
     #   nix-shell -p ssh-to-age
     #   ssh-to-age < /etc/ssh/ssh_host_ed25519_key.pub
-    otanix-server: &otanix-server-age age1fwmktgds7wwrd2qtxwjwg0gvqv9snpzq0jk4chv4gtra5ut7lcvsqkyprm
+    otanix-server: &otanix-server-age age1vsn9we8cz76hctyf2w9mm6zt83gnmyevuewn76zzdxf2k9lc046qg6ycj4
   users:
     - &otanix-ssh-age age19sdmxlqurhaz6h66fr5m9973fsz796yxr46k09qpsvkypntsrumq4qjc3y
-    # - &niklash-pgp AF3B80CDA027245B51FC6D9BE83A373DA5AF5068
+
 creation_rules:
   # To open the secret file (requires ssh-to-age and sops), run
   #   export SOPS_AGE_KEY=$(ssh-to-age -private-key < ../id_rsa_otanix_server)
@@ -15,19 +15,15 @@ creation_rules:
   # If you make changes to keys, you need to re-encrypt the secrets
   #
   #   sops -d -i secrets.yaml; sops -e -i secrets.yaml
-  - path_regex: secrets/secrets.yaml
+  - path_regex: 01-secrets/secrets.yaml
     key_groups:
-      - pgp:
-          # - *niklash-pgp
-        age:
+      - age:
           - *otanix-ssh-age
           - *otanix-server-age
 
-  - path_regex: nginx/nginx-secrets.yaml
+  - path_regex: 03-nginx/nginx-secrets.yaml
     key_groups:
-      - pgp:
-          # - *niklash-pgp
-        age:
+      - age:
           - *otanix-ssh-age
           - *otanix-server-age
 

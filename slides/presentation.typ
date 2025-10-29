@@ -31,6 +31,8 @@
 
 #show link: set text(blue, style: "italic")
 
+#let repo = "https://github.com/OtaNix-ry/home-server-workshop/blob/main/"
+
 // #let bg-img = read("images/background.png", encoding: none)
 
 #show: simple-theme.with(
@@ -141,10 +143,10 @@
 == Prerequisites to do the workshop yourself
 
 - Computer with GNU/Linux
+  - Preferably a large amount of RAM (>8GB) #footnote[Consider closing unnecessary applications if you have only 16GB of RAM]
 - Nix installed
 - Libvirt (or another hypervisor of your choice)
-- Preferably a large amount of RAM (>8GB)
-  - Consider closing unnecessary applications
+- It's also recommended to clone this repository for yourself. For that you need to have Git installed
 
 == Workshop Objectives
 
@@ -156,7 +158,7 @@ The aim of this workshop is to be both an introduction and a guide to deploying 
 - Deploy *nginx* with self-signed certificates on NixOS.
 - Deploy *Vaultwarden* with nginx as a reverse proxy.
 
-The materials in this workshop are open source and available on #link("https://github.com/otanix-ry/otanix-server-2025-09-08")[GitHub].
+The materials in this workshop are open source and available on #link(repo)[GitHub].
 You can find the latest PDF from the GitHub releases.
 
 = Setting up a libvirt VM
@@ -233,10 +235,13 @@ Add a connection to `QEMU/KVM` (system session #footnote[Using the user session 
 #v(-1.6em)
 
 - We have booted into the live (non-persistent) NixOS environment.
-- Before we continue, let's set up an SSH connection to the server.
-  - It suffices to set a password for the `nixos` user
+// - Before we continue, let's set up an SSH connection to the server.
+- To get the IPv4 address of the VM, run `ip addr`.
+- It suffices to set a password for the `nixos` user to SSH in.
 
 #place(bottom + center, image("images/passwd.png"))
+
+#place(dx: 3%, dy: 62%, box(height: 4%, width: 20%, stroke: 2pt + red))
 
 ==
 
@@ -255,7 +260,7 @@ And yes -- I use #link("https://github.com/ryanoasis/nerd-fonts/tree/master/patc
   #link("https://github.com/nix-community/disko")[Image source]
 
   #link(
-    "https://github.com/OtaNix-ry/otanix-server-2025-09-08/blob/main/otanix-server/otanix-server/00-initial/disko.nix",
+    repo + "otanix-server/otanix-server/00-initial/disko.nix",
   )[URL to GitHub disko.nix]
 ]
 
@@ -280,7 +285,7 @@ And yes -- I use #link("https://github.com/ryanoasis/nerd-fonts/tree/master/patc
 
 #pause
 
-#place(dx: 53%, dy: -1%, box(height: 34%, width: 50%, stroke: 2pt + red))
+#place(dx: 53%, dy: 6%, box(height: 27%, width: 50%, stroke: 2pt + red))
 
 #pause
 
@@ -429,7 +434,7 @@ Last login: Sun Sep  7 12:04:36 2025
 = Secret management
 
 #place(bottom + right, link(
-  "https://github.com/OtaNix-ry/otanix-server-2025-09-08/tree/main/otanix-server/secrets",
+  repo + "otanix-server/01-secrets",
 )[Source code for this part])
 
 == What about secret management?
@@ -493,7 +498,7 @@ Last login: Sun Sep  7 12:04:36 2025
 = WireGuard VPN
 
 #place(bottom + right, link(
-  "https://github.com/OtaNix-ry/otanix-server-2025-09-08/tree/main/otanix-server/02-wireguard",
+  repo + "otanix-server/02-wireguard",
 )[Source code for this part])
 
 ==
@@ -693,7 +698,7 @@ Let's add the following options to `configuration.nix`:
 = Web-based service hosting on NixOS: Nginx
 
 #place(bottom + right, link(
-  "https://github.com/OtaNix-ry/otanix-server-2025-09-08/tree/main/otanix-server/nginx",
+  repo + "otanix-server/03-nginx",
 )[Source code for this part])
 
 ==
@@ -752,7 +757,7 @@ Let's add the following options to `configuration.nix`:
 = Web-based service hosting on NixOS: Vaultwarden
 
 #place(bottom + right, link(
-  "https://github.com/OtaNix-ry/otanix-server-2025-09-08/tree/main/otanix-server/vaultwarden",
+  repo + "otanix-server/04-vaultwarden",
 )[Source code for this part])
 
 ==
@@ -772,7 +777,7 @@ Let's add the following options to `configuration.nix`:
   ```
 ]
 
-== Web-based service hosting on NixOS: Vaultwarden #footnote[#link("https://github.com/OtaNix-ry/otanix-server-2025-09-08/tree/main/otanix-server/vaultwarden")[Source code for this part]]
+== Web-based service hosting on NixOS: Vaultwarden #footnote[#link(repo + "otanix-server/04-vaultwarden")[Source code for this part]]
 
 #text(20pt)[
   ```nix

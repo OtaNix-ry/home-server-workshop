@@ -23,7 +23,7 @@
   services.openssh.enable = true;
 
   users.users.root.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDTEXhQHAnlI2MfD26A9QL1hkLnalR4RI7TAiDL2CuMG"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDTEXhQHAnlI2MfD26A9QL1hkLnalR4RI7TAiDL2CuMG" # id_rsa_otanix_server
   ];
 
   # Copy the NixOS configuration file and link it from the resulting system
