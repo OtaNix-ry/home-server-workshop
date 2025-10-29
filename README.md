@@ -70,3 +70,33 @@ This is easily fixed by removing the host from "known hosts":
 ```
 ssh-keygen -R 192.168.122.215
 ```
+
+### Unable to deploy configuration
+
+If you get the following error when trying to deploy
+
+```
+error: function 'anonymous lambda' called without required argument 'config'
+```
+
+it's likely because you ran the `nixos-rebuild` command from the wrong directory.
+It must be run from the root of the repository and not from `otanix/NN-section`.
+
+### failed to decrypt ... Error getting data key
+
+If you see the following error during a deployment
+
+```
+/nix/store/lwbin64ylv9h7xxhivd4q23j16zi3njy-sops-install-secrets-0.0.1/bin/sops-install-secrets: failed to decrypt '/nix/store/ris74pfkqg8ljws4skxh80b2wa5y6b4r-nginx-secrets.yaml': Error getting data key: 0 successful groups required, got 0
+```
+
+it means that sops-nix was unable to decrypt the secrets on the server.
+
+This is often caused by forgetting to re-encrypt a secret file after changing `.sops.yaml`
+
+Re-encrypting e.g. `secrets.yaml` can be done by running the following two commands:
+
+```
+sops -i -d secrets.yaml
+sops -i -e secrets.yaml
+```

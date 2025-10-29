@@ -66,3 +66,11 @@ nmcli connection import type wireguard file otanix-vpn.conf
 > ```
 > nmcli con delete otanix-vpn
 > ```
+
+You should now be able to connect to the server by its wireguard address `10.127.0.1`:
+
+```
+ping 10.127.0.1
+```
+
+Once you have a working wireguard connection, you can move on to the [next section](../03-nginx/)
