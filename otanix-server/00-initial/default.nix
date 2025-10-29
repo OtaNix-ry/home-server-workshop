@@ -31,9 +31,5 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDTEXhQHAnlI2MfD26A9QL1hkLnalR4RI7TAiDL2CuMG" # id_rsa_otanix_server
   ];
 
-  # Copy the NixOS configuration file and link it from the resulting system
-  # (/run/current-system/configuration.nix). This is useful in case you
-  # accidentally delete configuration.nix.
-  system.copySystemConfiguration = true;
   system.stateVersion = "25.05";
 }
