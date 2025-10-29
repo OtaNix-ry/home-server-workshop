@@ -53,10 +53,16 @@ peer: rv0iaea+BIHFUmkDnbM+DFE9aFHSzzcdRoQFArrHEhk=
 
 ## Connecting to WireGuard
 
-Replace the `PublicKey` in [otanix-vpn.conf](./otanix-vpn.conf) with the public wireguard key that you generated with `wg pubkey < privkey`.
+Replace the `Endpoint` and `PublicKey` in [otanix-vpn.conf](./otanix-vpn.conf) with the server's address and public wireguard key that you generated with `wg pubkey < privkey` respectively.
 
 If you are using network manager, you can import the client configuration with
 
 ```
 nmcli connection import type wireguard file otanix-vpn.conf
 ```
+
+> Making changes to `otanix-vpn.conf` after importing requires that you delete the connection and import it again.
+>
+> ```
+> nmcli con delete otanix-vpn
+> ```

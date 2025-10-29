@@ -266,7 +266,7 @@ And yes -- I use #link("https://github.com/ryanoasis/nerd-fonts/tree/master/patc
   #image("images/disko.png", height: 60%)
   #link("https://github.com/nix-community/disko")[Image source]
 
-  #link(repo + "otanix-server/otanix-server/00-initial/disko.nix")[URL to GitHub disko.nix]
+  #link(repo + "otanix-server/00-initial/disko.nix")[URL to GitHub disko.nix]
 ]
 
 #place(
