@@ -7,6 +7,7 @@
         content = {
           type = "gpt";
           partitions = {
+            # Uncomment the following block if your boot mode is UEFI
             # ESP = {
             #   type = "EF00";
             #   size = "500M";
@@ -17,6 +18,8 @@
             #     mountOptions = [ "umask=0077" ];
             #   };
             # };
+
+            # And comment out the following
             boot = {
               size = "1M";
               type = "EF02"; # for grub MBR

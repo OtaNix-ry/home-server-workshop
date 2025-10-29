@@ -15,7 +15,12 @@
   boot.loader.grub.enable = true;
   # Define on which hard drive you want to install Grub.
   # We are not running UEFI firmware on the virtual machine.
-  boot.loader.grub.device = "/dev/vda"; # or "nodev" for efi only
+  boot.loader.grub.device = "/dev/vda"; # use "nodev" for EFI-only mode
+
+  # If your boot mode is UEFI, uncomment the following.
+  # boot.loader.grub.device = "nodev";
+  # boot.loader.grub.efiSupport = true;
+  # boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "otanix-server"; # Define your hostname.
   networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.

@@ -20,6 +20,11 @@ Then run
 sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount disko.nix
 ```
 
+> Note: we assume that your boot mode is BIOS (legacy).
+> If your hypervisor uses UEFI boot, you need to comment the `boot` section in `disko.nix` and uncomment the `ESP` section.
+> Also change the configuration (`default.nix`) to use the EFI boot loader.
+> See [the official manual](https://nixos.org/manual/nixos/stable/#sec-installation-manual-installing) for more information.
+
 ## NixOS installation
 
 1. Generate the configuration
@@ -34,7 +39,7 @@ sudo nix --experimental-features "nix-command flakes" run github:nix-community/d
     cat /mnt/etc/nixos/hardware-configuration.nix
     ```
 
-3. Replace the generated `configuration.nix`
+3. Replace the generated `/mnt/etc/nixos/configuration.nix` on the server with the configuration from this repository
 
     ```
     sudo rm /mnt/etc/nixos/configuration.nix
